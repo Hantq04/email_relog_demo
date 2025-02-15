@@ -20,6 +20,4 @@ public interface UserService {
     String sendResetPasswordEmail(String email) throws MessagingException, UnsupportedEncodingException;
 
     String resetPassword(String s, String token, String newPassword);
-
-    boolean emailExists(String email);
 }

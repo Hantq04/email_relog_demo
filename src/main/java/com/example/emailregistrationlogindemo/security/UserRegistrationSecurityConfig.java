@@ -31,9 +31,9 @@ public class UserRegistrationSecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login")                 // Trang login tùy chỉnh
+                        .loginPage("/login")
                         .usernameParameter("email")
-                        .defaultSuccessUrl("/users", true)     // Sau khi đăng nhập thành công
+                        .defaultSuccessUrl("/users", true)
                         .failureHandler(new CustomAuthenticationFailureHandler())
                         .permitAll()
                 )
@@ -45,6 +45,5 @@ public class UserRegistrationSecurityConfig {
                 )
                 .build();
     }
-
 
 }

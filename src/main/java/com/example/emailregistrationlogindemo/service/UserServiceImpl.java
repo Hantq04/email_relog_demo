@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -88,7 +85,7 @@ public class UserServiceImpl implements UserService {
             // Nếu token đã tồn tại, cập nhật token mới
             resetToken = existingToken.get();
             resetToken.setToken(token);
-            resetToken.setExpirationTime(new java.util.Date(System.currentTimeMillis() + 15 * 60 * 1000)); // 15 phút
+            resetToken.setExpirationTime(new Date(System.currentTimeMillis() + 15 * 60 * 1000)); // 15 phút
         } else {
             // Nếu chưa có, tạo token mới
             resetToken = new PasswordResetToken(token, user);
@@ -119,7 +116,7 @@ public class UserServiceImpl implements UserService {
             return "Passwords do not match!";
         }
         PasswordResetToken resetToken = passwordResetTokenRepository.findByToken(token);
-        if (resetToken == null || resetToken.getExpirationTime().before(new java.util.Date())) {
+        if (resetToken == null || resetToken.getExpirationTime().before(new Date())) {
             return "Invalid or expired token";
         }
         User user = resetToken.getUser();
@@ -128,8 +125,4 @@ public class UserServiceImpl implements UserService {
         return "Password reset successful. You can now log in with your new password.";
     }
 
-    @Override
-    public boolean emailExists(String email) {
-        return userRepository.findByEmail(email).isPresent();
-    }
 }

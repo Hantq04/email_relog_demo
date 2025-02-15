@@ -25,4 +25,5 @@ public class ForgotPasswordController {
         model.addAttribute("message", result);
         return "forgot-password";
     }
+
 }

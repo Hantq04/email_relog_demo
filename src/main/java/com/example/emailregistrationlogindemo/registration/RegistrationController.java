@@ -56,7 +56,7 @@ public class RegistrationController {
 //    public String verifyEmail(@RequestParam("token") String token) {
 //        VerificationToken theToken = tokenRepository.findByToken(token);
 //
-//        if (theToken == null) {  // 🔹 Nếu token không tồn tại
+//        if (theToken == null) {  // Nếu token không tồn tại
 //            return "Invalid verification token";
 //        }
 //
@@ -74,28 +74,22 @@ public class RegistrationController {
     @GetMapping("/verify-email")
     public String verifyEmail(@RequestParam("token") String token, RedirectAttributes redirectAttributes) {
         VerificationToken theToken = tokenRepository.findByToken(token);
-
         if (theToken == null) {
             redirectAttributes.addFlashAttribute("error", "invalidToken");
             return "redirect:/login";
         }
-
         if (theToken.getUser().isEnabled()) {
             redirectAttributes.addFlashAttribute("error", "alreadyVerified");
             return "redirect:/login";
         }
-
         String verificationResult = userService.validateToken(token);
         if (verificationResult.equalsIgnoreCase("valid")) {
             redirectAttributes.addFlashAttribute("success", "verified");
             return "redirect:/login";
         }
-
         redirectAttributes.addFlashAttribute("error", "invalidToken");
         return "redirect:/login";
     }
-
-
 
     private String applicationUrl(HttpServletRequest request) {
         return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();

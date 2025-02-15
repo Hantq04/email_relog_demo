@@ -3,6 +3,7 @@ package com.example.emailregistrationlogindemo.registration.token;
 import com.example.emailregistrationlogindemo.model.User;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -11,20 +12,20 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "password_reset_token")
 public class PasswordResetToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String token;
-    private Date expirationTime;
+    Long id;
+    String token;
+    Date expirationTime;
 
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    private static final int EXPIRATION_TIME = 15; // Token hết hạn sau 15 phút
+    static final int EXPIRATION_TIME = 15;
 
     public PasswordResetToken(String token, User user) {
         this.token = token;
