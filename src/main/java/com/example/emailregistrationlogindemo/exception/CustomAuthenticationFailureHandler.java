@@ -1,6 +1,5 @@
 package com.example.emailregistrationlogindemo.exception;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.DisabledException;
@@ -12,9 +11,8 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
     @Override
     public void onAuthenticationFailure(HttpServletRequest request,
                                         HttpServletResponse response,
-                                        AuthenticationException exception) throws IOException, ServletException {
+                                        AuthenticationException exception) throws IOException {
         if (exception instanceof DisabledException) {
-            // Nếu tài khoản chưa được kích hoạt (verify)
             response.sendRedirect("/login?error=notVerified");
         } else {
             response.sendRedirect("/login?error=true");

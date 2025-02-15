@@ -97,6 +97,6 @@ public class RegistrationController {
 
     @GetMapping
     public String showRegistrationPage() {
-        return "registration"; // Trả về file registration.html trong templates
+        return "registration";
     }
 }

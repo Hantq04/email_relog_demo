@@ -124,5 +124,4 @@ public class UserServiceImpl implements UserService {
         passwordResetTokenRepository.delete(resetToken);
         return "Password reset successful. You can now log in with your new password.";
     }
-
 }
