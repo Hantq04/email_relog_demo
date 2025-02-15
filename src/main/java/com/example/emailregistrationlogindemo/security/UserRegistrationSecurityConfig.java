@@ -15,6 +15,14 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class UserRegistrationSecurityConfig {
 
+    private static final String[] ALL_PERMIT = {
+            "/login/**",
+            "/register/**",
+            "/forgot-password",
+            "/reset-password/**",
+            "/logout"
+    };
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -26,7 +34,7 @@ public class UserRegistrationSecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login**", "/register/**", "/forgot-password", "/reset-password/**").permitAll()
+                        .requestMatchers(ALL_PERMIT).permitAll()
                         .requestMatchers("/users/**").hasAnyAuthority("USER", "ADMIN")
                         .anyRequest().authenticated()
                 )
